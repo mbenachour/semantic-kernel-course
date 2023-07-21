@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clothing Store</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset styles */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Global styles */
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #f2f2f2;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: 700;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f2f2f2;
+      }
+
+      button {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #555;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      /* Media queries */
+      @media screen and (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+
+      @media screen and (max-width: 576px) {
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        button {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchData();
+      });
+
+      function fetchData() {
+        fetch("http://127.0.0.1:8080/clothing")
+          .then((response) => response.json())
+          .then((data) => displayData(data))
+          .catch((error) => console.error("Error:", error));
+      }
+
+      function displayData(data) {
+        const tableBody = document.getElementById("table-body");
+        tableBody.innerHTML = "";
+
+        data.forEach((article) => {
+          const row = document.createElement("tr");
+          const idCell = document.createElement("td");
+          const priceCell = document.createElement("td");
+          const categoryCell = document.createElement("td");
+
+          idCell.textContent = article.id;
+          priceCell.textContent = article.price.toFixed(2);
+          categoryCell.textContent = article.category;
+
+          row.appendChild(idCell);
+          row.appendChild(priceCell);
+          row.appendChild(categoryCell);
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      function sortByPrice() {
+        const tableBody = document.getElementById("table-body");
+        const rows = Array.from(tableBody.getElementsByTagName("tr"));
+
+        rows.sort((a, b) => {
+          const priceA = parseFloat(
+            a.getElementsByTagName("td")[1].textContent
+          );
+          const priceB = parseFloat(
+            b.getElementsByTagName("td")[1].textContent
+          );
+          return priceA - priceB;
+        });
+
+        tableBody.innerHTML = "";
+        rows.forEach((row) => tableBody.appendChild(row));
+      }
+
+      function addArticle() {
+        const categoryInput = document.getElementById("category-input");
+        const priceInput = document.getElementById("price-input");
+
+        const article = {
+          category: categoryInput.value,
+          price: parseFloat(priceInput.value),
+        };
+
+        fetch("http://127.0.0.1:8080/clothing", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(article),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            categoryInput.value = "";
+            priceInput.value = "";
+            fetchData();
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Clothing Store</h1>
+      <button onclick="sortByPrice()">Sort by Price</button>
+      <form>
+        <label for="category-input">Category:</label>
+        <input type="text" id="category-input" name="category" required />
+
+        <label for="price-input">Price:</label>
+        <input
+          type="number"
+          id="price-input"
+          name="price"
+          step="0.01"
+          required
+        />
+
+        <button type="button" onclick="addArticle()">Add Item</button>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Price</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Inventory data will be displayed here -->
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

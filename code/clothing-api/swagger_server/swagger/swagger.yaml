@@ -1,0 +1,57 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Clothing Store API"
+paths:
+  /clothing:
+    get:
+      summary: "Retrieve a list of clothing articles"
+      description: "Returns a list of fake clothing articles with price and category."
+      operationId: "clothing_get"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ClothingArticle"
+      x-swagger-router-controller: "swagger_server.controllers.default_controller"
+    post:
+      summary: "Add a new clothing article"
+      description: "Adds a new clothing article with price and category."
+      operationId: "clothing_post"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "article"
+        description: "Clothing article object"
+        required: true
+        schema:
+          $ref: "#/definitions/ClothingArticle"
+      responses:
+        "200":
+          description: "Successful operation"
+      x-swagger-router-controller: "swagger_server.controllers.default_controller"
+definitions:
+  ClothingArticle:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        description: "Unique identifier for the clothing article"
+      price:
+        type: "number"
+        format: "float"
+        description: "Price of the clothing article"
+      category:
+        type: "string"
+        description: "Category of the clothing article"
+    example:
+      id: 1
+      price: 29.99
+      category: "Shirts"

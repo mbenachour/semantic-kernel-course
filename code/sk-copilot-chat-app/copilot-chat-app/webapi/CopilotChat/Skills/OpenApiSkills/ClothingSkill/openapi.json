@@ -1,0 +1,88 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Clothing Store API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "paths": {
+        "/clothing": {
+            "get": {
+                "summary": "Retrieve a list of clothing articles",
+                "description": "Returns a list of fake clothing articles with price and category.",
+                "operationId": "clothing_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ClothingArticle"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-swagger-router-controller": "swagger_server.controllers.default_controller"
+            },
+            "post": {
+                "summary": "Add a new clothing article",
+                "description": "Adds a new clothing article with price and category.",
+                "operationId": "clothing_post",
+                "requestBody": {
+                    "description": "Clothing article object",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClothingArticle"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {}
+                    }
+                },
+                "x-swagger-router-controller": "swagger_server.controllers.default_controller",
+                "x-codegen-request-body-name": "article"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ClothingArticle": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Unique identifier for the clothing article"
+                    },
+                    "price": {
+                        "type": "number",
+                        "description": "Price of the clothing article",
+                        "format": "float"
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "Category of the clothing article"
+                    }
+                },
+                "example": {
+                    "id": 1,
+                    "price": 29.99,
+                    "category": "Shirts"
+                }
+            }
+        }
+    }
+}

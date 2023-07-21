@@ -1,0 +1,18 @@
+{
+    "schema_version": "v1",
+    "name_for_model": "Clothing",
+    "name_for_human": "Clothing",
+    "description_for_human": "Clothing skill",
+    "description_for_model": "Assist the user in finding clothing articles",
+    "api": {
+    "type": "openapi",
+    "url": "http://localhost:8080/swagger.json",
+    "has_user_authentication": false
+    },
+    "auth": {
+    "type": "none"
+    },
+    "logo_url": "",
+    "contact_email": "test@test.com",
+    "legal_info_url": ""
+    }
