@@ -5,7 +5,7 @@ This is a sample project to demonstrate the Semantic Kernel OpenAPI skill. It co
 The Copilot chat app is an enriched intelligence app, with multiple dynamic components including command messages, user intent, and memories. The chat prompt and response will evolve as the conversation between the user and the application proceeds. This chat experience is orchestrated with Semantic Kernel and a Copilot Chat skill containing numerous functions that work together to construct each response.
 
 
-![ezgif-3-0f1aa951eb](https://github.com/mbenachour/semantic-kernel-course/assets/2052704/a3f684a3-61d9-459c-9448-b70ff8347aa7)
+![ezgif-3-0f1aa951eb](https://github.com/mbenachour/semantic-kernel-course/assets/2052704/7124da53-916f-4eb6-9ae5-fba1c54ac078)
 
 
 ## Clothing API
