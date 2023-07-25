@@ -1,0 +1,7 @@
+{
+  "type": "openai",
+  "endpoint": "NOT-USED-BUT-REQUIRED-FOR-PARSER",
+  "model": "text-davinci-003",
+  "apikey": "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",
+  "org": ""
+}
